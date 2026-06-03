@@ -1,0 +1,90 @@
+﻿@model Citas_App.Models.AgendarViewModel
+
+<div style="font-family: Arial, sans-serif; padding: 10px;">
+    <h1 style="text-align: center; color: #333; margin-bottom: 30px;">Panel de Control - Clínica Médica</h1>
+
+    <div style="background: #f8f9fa; border: 1px solid #ddd; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h2 style="margin: 0; color: #0d6efd;">📅 Agenda de Citas Recientes</h2>
+            <a asp-controller="Cita" asp-action="Crear" style="padding: 10px 15px; background-color: #0d6efd; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                + Agendar Cita
+            </a>
+        </div>
+
+        <table border="1" cellpadding="8" style="width: 100%; border-collapse: collapse; background: white;">
+            <tr style="background-color: #e9ecef;">
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Paciente</th>
+                <th>Médico</th>
+                <th>Motivo</th>
+                <th>Estado</th>
+            </tr>
+            @foreach (var c in Model.Citas)
+            {
+                var paciente = Model.Pacientes.FirstOrDefault(p => p.Id == c.PacienteId);
+                var medico = Model.Medicos.FirstOrDefault(m => m.Id == c.MedicoId);
+                <tr>
+                    <td>@c.Fecha.ToString("dd/MM/yyyy")</td>
+                    <td>@c.Hora.ToString("HH:mm")</td>
+                    <td>@(paciente != null ? $"{paciente.Nombre} {paciente.Apellido}" : "—")</td>
+                    <td>@(medico != null ? $"{medico.Nombre} {medico.Apellido}" : "—")</td>
+                    <td>@c.Motivo</td>
+                    <td><span style="font-weight: bold; color: @(c.Estado == "Cancelada" ? "red" : c.Estado == "Completada" ? "green" : "blue")">@c.Estado</span></td>
+                </tr>
+            }
+        </table>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+
+        <div style="background: #f8f9fa; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin: 0; color: #198754;">👥 Pacientes</h3>
+                <a asp-controller="Paciente" asp-action="Crear" style="padding: 8px 12px; background-color: #198754; color: white; text-decoration: none; border-radius: 5px; font-size: 14px;">
+                    + Nuevo Paciente
+                </a>
+            </div>
+            <table border="1" cellpadding="6" style="width: 100%; border-collapse: collapse; background: white;">
+                <tr style="background-color: #e2f0d9;">
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+                @foreach (var p in Model.Pacientes)
+                {
+                    <tr>
+                        <td>@p.Nombre @p.Apellido</td>
+                        <td>@p.Telefono</td>
+                        <td><a asp-controller="Paciente" asp-action="Detalle" asp-route-id="@p.Id">Ver</a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        <div style="background: #f8f9fa; border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 style="margin: 0; color: #6f42c1;">🩺 Personal Médico</h3>
+                <a asp-controller="Medico" asp-action="Crear" style="padding: 8px 12px; background-color: #6f42c1; color: white; text-decoration: none; border-radius: 5px; font-size: 14px;">
+                    + Nuevo Médico
+                </a>
+            </div>
+            <table border="1" cellpadding="6" style="width: 100%; border-collapse: collapse; background: white;">
+                <tr style="background-color: #e8daef;">
+                    <th>Nombre</th>
+                    <th>Especialidad</th>
+                    <th>Acciones</th>
+                </tr>
+                @foreach (var m in Model.Medicos)
+                {
+                    <tr>
+                        <td>@m.Nombre @m.Apellido</td>
+                        <td>@m.Especialidad</td>
+                        <td><a asp-controller="Medico" asp-action="Detalle" asp-route-id="@m.Id">Ver</a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+    </div>
+</div>

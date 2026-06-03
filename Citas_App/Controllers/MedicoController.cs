@@ -1,4 +1,5 @@
-﻿using CitasApp.Interfaces;
+﻿using Citas_App.Models;
+using CitasApp.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Citas_App.Controllers
@@ -14,6 +15,24 @@ namespace Citas_App.Controllers
 		{
 			var medico = _repo.ObtenerPorId(id);
 			return medico == null ? NotFound() : View(medico);
+		}
+
+		[HttpGet]
+		public IActionResult Crear()
+		{
+			return View();
+		}
+
+		[HttpPost]
+		public IActionResult Crear(Medico nuevoMedico)
+		{
+			if (ModelState.IsValid)
+			{
+
+				_repo.Agregar(nuevoMedico);
+				return RedirectToAction("Index");
+			}
+			return View(nuevoMedico);
 		}
 	}
 }

@@ -33,5 +33,29 @@ namespace CitasApp.Repositories
 
 		public List<Cita> ObtenerPorPaciente(int pacienteId) =>
 			ObtenerTodos().Where(c => c.PacienteId == pacienteId).ToList();
+
+		public void Agregar(Cita cita)
+		{
+
+			string rutaArchivo = Path.Combine("data", "citas.json");
+
+
+			var jsonActual = File.ReadAllText(rutaArchivo);
+			var citas = JsonSerializer.Deserialize<List<Cita>>(jsonActual) ?? new List<Cita>();
+
+
+			int nuevoId = citas.Any() ? citas.Max(p => p.Id) + 1 : 1;
+			cita.Id = nuevoId;
+
+
+			citas.Add(cita);
+
+
+			var opciones = new JsonSerializerOptions { WriteIndented = true };
+			var nuevoJson = JsonSerializer.Serialize(citas, opciones);
+
+
+			File.WriteAllText(rutaArchivo, nuevoJson);
+		}
 	}
 }

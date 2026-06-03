@@ -1,4 +1,5 @@
-﻿using CitasApp.Interfaces;
+﻿using Citas_App.Models;
+using CitasApp.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Citas_App.Controllers
@@ -28,6 +29,30 @@ namespace Citas_App.Controllers
 			ViewBag.Pacientes = _pacienteRepo.ObtenerTodos();
 			ViewBag.Medicos = _medicoRepo.ObtenerTodos();
 			return View(_citaRepo.ObtenerPorPaciente(pacienteId));
+		}
+
+		[HttpGet]
+		public IActionResult Crear()
+		{
+			
+			ViewBag.Pacientes = _pacienteRepo.ObtenerTodos();
+			ViewBag.Medicos = _medicoRepo.ObtenerTodos();
+			return View();
+		}
+
+		[HttpPost]
+		public IActionResult Crear(Cita nuevoCita)
+		{
+			if (ModelState.IsValid)
+			{
+				_citaRepo.Agregar(nuevoCita);
+				return RedirectToAction("Index");
+			}
+
+			
+			ViewBag.Pacientes = _pacienteRepo.ObtenerTodos();
+			ViewBag.Medicos = _medicoRepo.ObtenerTodos();
+			return View(nuevoCita);
 		}
 	}
 }

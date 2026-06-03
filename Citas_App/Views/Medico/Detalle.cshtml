@@ -1,6 +1,15 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
-}
-<h1>@ViewData["Title"]</h1>
+﻿@model Citas_App.Models.Medico
 
-<p>Use this page to detail your site's privacy policy.</p>
+<h1>Detalles del Médico</h1>
+
+<div style="border: 1px solid #ccc; padding: 20px; max-width: 400px; margin-top: 20px; border-radius: 8px;">
+    <p><strong>ID:</strong> @Model.Id</p>
+    <p><strong>Nombre:</strong> @Model.Nombre @Model.Apellido</p>
+    <p><strong>Especialidad:</strong> @Model.Especialidad</p>
+</div>
+
+<div style="margin-top: 20px;">
+    <a asp-controller="Medico" asp-action="Index" class="btn btn-secondary" style="padding: 10px 20px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 5px;">
+        Volver a la lista
+    </a>
+</div>

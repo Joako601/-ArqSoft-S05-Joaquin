@@ -23,5 +23,29 @@ namespace CitasApp.Repositories
 
 		public Medico? ObtenerPorId(int id) =>
 			ObtenerTodos().FirstOrDefault(m => m.Id == id);
+
+		public void Agregar(Medico medico)
+		{
+
+			string rutaArchivo = Path.Combine("data", "medicos.json");
+
+
+			var jsonActual = File.ReadAllText(rutaArchivo);
+			var medicos = JsonSerializer.Deserialize<List<Medico>>(jsonActual) ?? new List<Medico>();
+
+
+			int nuevoId = medicos.Any() ? medicos.Max(p => p.Id) + 1 : 1;
+			medico.Id = nuevoId;
+
+
+			medicos.Add(medico);
+
+
+			var opciones = new JsonSerializerOptions { WriteIndented = true };
+			var nuevoJson = JsonSerializer.Serialize(medicos, opciones);
+
+
+			File.WriteAllText(rutaArchivo, nuevoJson);
+		}
 	}
 }
