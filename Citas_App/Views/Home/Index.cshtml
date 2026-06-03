@@ -1,8 +1,83 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<!-- Enlazamos tu hoja de estilos -->
+<link rel="stylesheet" href="~/css/agenda.css" />
+
+<div style="background-color: var(--doc-gray); padding: 40px 20px; min-height: 100vh;">
+    <div style="max-width: 1100px; margin: 0 auto;">
+
+        <!-- 1. BANNER DE BIENVENIDA -->
+        <div class="hero-banner animate-up">
+            <h1>Bienvenido a MediGest</h1>
+            <p>Tu sistema centralizado para la gestión de pacientes, control de citas y administración del directorio médico. Todo lo que necesitas para operar hoy, en un solo lugar.</p>
+
+            <!-- NUEVO: BOTÓN PRINCIPAL HACIA EL PANEL DE AGENDAR -->
+            <div style="margin-top: 25px; position: relative; z-index: 2;">
+                <a asp-controller="Agendar" asp-action="Index" class="doc-btn" style="background-color: white; color: var(--doc-teal); font-size: 16px; padding: 12px 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    Ir al Panel Central
+                </a>
+            </div>
+        </div>
+
+        <!-- 2. ACCESOS RÁPIDOS (Ahora con 4 tarjetas) -->
+        <div class="dashboard-grid animate-up delay-1">
+
+            <!-- NUEVO: Acceso al Panel Central (Agendar) -->
+            <!-- Le ponemos un borde teal más grueso para que destaque como la opción principal -->
+            <a asp-controller="Agendar" asp-action="Index" class="action-card" style="border: 2px solid var(--doc-teal);">
+                <div class="action-icon" style="background: var(--doc-teal); color: white;">🏥</div>
+                <h2 class="action-title">Mi Agenda</h2>
+                <p class="action-desc">Accede a la vista unificada de tus próximas citas, listado de pacientes recientes y especialistas.</p>
+            </a>
+
+            <!-- Acceso a Citas -->
+            <a asp-controller="Cita" asp-action="Index" class="action-card">
+                <div class="action-icon">📅</div>
+                <h2 class="action-title">Control de Citas</h2>
+                <p class="action-desc">Visualiza el historial completo, programa nuevas consultas y actualiza los estados de atención.</p>
+            </a>
+
+            <!-- Acceso a Pacientes -->
+            <a asp-controller="Paciente" asp-action="Index" class="action-card">
+                <div class="action-icon">👥</div>
+                <h2 class="action-title">Pacientes</h2>
+                <p class="action-desc">Registra nuevos pacientes, consulta historiales y actualiza datos de contacto rápidamente.</p>
+            </a>
+
+            <!-- Acceso a Médicos -->
+            <a asp-controller="Medico" asp-action="Index" class="action-card">
+                <div class="action-icon">🩺</div>
+                <h2 class="action-title">Especialistas</h2>
+                <p class="action-desc">Administra el directorio de médicos disponibles, sus especialidades y perfiles profesionales.</p>
+            </a>
+
+        </div>
+
+        <!-- 3. SECCIÓN DE INFORMACIÓN EXTRA (Buenas prácticas) -->
+        <div class="doc-card animate-up delay-2">
+            <h3 style="color: var(--doc-dark); font-weight: 700; margin: 0 0 20px 0; font-size: 20px;">
+                💡 Tips de Operación Diaria
+            </h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                <div style="padding: 15px; border-left: 4px solid var(--doc-teal); background: #f8fafc; border-radius: 4px;">
+                    <strong style="color: var(--doc-dark); display: block; margin-bottom: 5px;">Manejo de Estados</strong>
+                    <span style="color: #64748b; font-size: 14px;">Recuerda cambiar el estado de las citas a "Completada" una vez que el paciente salga del consultorio para mantener las métricas limpias.</span>
+                </div>
+
+                <div style="padding: 15px; border-left: 4px solid #4361ee; background: #f8fafc; border-radius: 4px;">
+                    <strong style="color: var(--doc-dark); display: block; margin-bottom: 5px;">Prevención de Errores</strong>
+                    <span style="color: #64748b; font-size: 14px;">Antes de registrar un nuevo paciente, verifica en el directorio si no cuenta ya con un expediente abierto.</span>
+                </div>
+
+                <div style="padding: 15px; border-left: 4px solid #e83e8c; background: #f8fafc; border-radius: 4px;">
+                    <strong style="color: var(--doc-dark); display: block; margin-bottom: 5px;">Cancelaciones</strong>
+                    <span style="color: #64748b; font-size: 14px;">Las citas canceladas no se borran del sistema por motivos de auditoría. Solo actualiza su estado a "Cancelada".</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
