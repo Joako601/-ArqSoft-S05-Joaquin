@@ -1,17 +1,16 @@
-﻿@model List<Citas_App.Models.Medico>
-<h1>Médicos disponibles</h1>
-<table border="1" cellpadding="8">
-    <tr>
-        <th>Nombre</th>
-        <th>Especialidad</th>
-        <th></th>
-    </tr>
-    @foreach (var m in Model)
-    {
-        <tr>
-            <td>@m.Nombre @m.Apellido</td>
-            <td>@m.Especialidad</td>
-            <td><a asp-action="Detalle" asp-route-id="@m.Id">Ver detalle</a></td>
-        </tr>
-    }
-</table>
+﻿@model Citas_App.Models.Paciente
+
+<h1>Detalles del Paciente</h1>
+
+<div style="border: 1px solid #ccc; padding: 20px; max-width: 400px; margin-top: 20px; border-radius: 8px;">
+    <p><strong>ID:</strong> @Model.Id</p>
+    <p><strong>Nombre:</strong> @Model.Nombre @Model.Apellido</p>
+    <p><strong>Email:</strong> @Model.Email</p>
+    <p><strong>Teléfono:</strong> @Model.Telefono</p>
+</div>
+
+<div style="margin-top: 20px;">
+    <a asp-action="Index" class="btn btn-secondary" style="padding: 10px 20px; background-color: #6c757d; color: white; text-decoration: none; border-radius: 5px;">
+        Volver a la lista
+    </a>
+</div>
