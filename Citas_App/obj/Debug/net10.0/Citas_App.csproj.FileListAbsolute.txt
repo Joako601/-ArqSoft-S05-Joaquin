@@ -1,9 +1,0 @@
-C:\Users\Gema\source\repos\Citas_App\Citas_App\obj\Debug\net10.0\rpswa.dswa.cache.json
-C:\Users\Gema\source\repos\Citas_App\Citas_App\obj\Debug\net10.0\Citas_App.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Gema\source\repos\Citas_App\Citas_App\obj\Debug\net10.0\Citas_App.AssemblyInfoInputs.cache
-C:\Users\Gema\source\repos\Citas_App\Citas_App\obj\Debug\net10.0\Citas_App.AssemblyInfo.cs
-C:\Users\Gema\source\repos\Citas_App\Citas_App\obj\Debug\net10.0\Citas_App.csproj.CoreCompileInputs.cache
-C:\Users\Gema\source\repos\Citas_App\Citas_App\obj\Debug\net10.0\Citas_App.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\Gema\source\repos\Citas_App\Citas_App\obj\Debug\net10.0\Citas_App.RazorAssemblyInfo.cache
-C:\Users\Gema\source\repos\Citas_App\Citas_App\obj\Debug\net10.0\Citas_App.RazorAssemblyInfo.cs
-C:\Users\Gema\source\repos\Citas_App\Citas_App\obj\Debug\net10.0\Citas_App.sourcelink.json
