@@ -13,6 +13,9 @@
 
 
 # App de citas médicas construida con ASP.NET Core MVC (.NET 10).
+## Descripción del Proyecto
+
+Este proyecto es un sistema integral de gestión clínica desarrollado en **ASP.NET Core MVC**, diseñado desde una perspectiva arquitectónica limpia que prescinde de bases de datos relacionales pesadas para implementar en su lugar una persistencia de datos rápida y portable basada en archivos JSON, donde el código destaca por la aplicación de **Principios SOLID** al separar estrictamente la lógica de acceso a datos mediante el **Patrón Repositorio** y utilizar la **Inyección de Dependencias** nativa del framework para acoplar las interfaces con sus implementaciones, garantizando así un código escalable y fácil de mantener, complementado con una interfaz de usuario moderna, responsiva y orientada a aplicaciones SaaS médicas
 
 ## Entidades
 - **Paciente** — lista y detalle de pacientes registrados
@@ -36,8 +39,47 @@ Repositorios por interfaz con inyección de dependencias.
 - `/Medico` — lista de médicos
 - `/Cita` — agenda completa
 
-## Requisitos
-- .NET 10.0
+## 🛠️ Stack Tecnológico
+
+**Backend & Framework**
+- **C# / .NET 10:** Lenguaje y entorno de ejecución principal.
+- **ASP.NET Core MVC:** Patrón arquitectónico para la separación estructurada de responsabilidades (Model-View-Controller).
+
+**Patrones de Diseño**
+- **Principios SOLID:** Código modular, altamente desacoplado y preparado para escalar.
+
+**Frontend & UI**
+- **Razor Views (`.cshtml`):** Motor de plantillas para la generación de vistas dinámicas enlazadas a los modelos de C#.
+- **CSS3 / UI Personalizada:** Diseño de interfaz desde cero orientado a la experiencia de usuario (UX) de un SaaS corporativo.
+- **Bootstrap 5:** Utilizado para la estructura del layout base y la barra de navegación responsiva.
+
+---
+## 📸 Capturas de Pantalla
+
+<div align="center">
+  <img src="Citas_App/Img/Home.png" alt="Panel de Inicio" width="800">
+  <p><em>Panel de control principal (Home)</em></p>
+</div>
+
+<div align="center">
+  <img src="Citas_App/Img/Agendar.png" alt="Vista del Panel Central" width="800">
+  <p><em>Vista unificada del sistema (Agendar)</em></p>
+</div>
+
+<div align="center">
+  <img src="Citas_App/Img/Citas.png" alt="Vista de Agenda" width="800">
+  <p><em>Gestor centralizado de citas y horarios</em></p>
+</div>
+
+<div align="center">
+  <img src="Citas_App/Img/Pacientes.png" alt="Directorio de Pacientes" width="800">
+  <p><em>Directorio humanizado y fichas clínicas</em></p>
+</div>
+
+<div align="center">
+  <img src="Citas_App/Img/Privacidad.png" alt="Políticas de Privacidad" width="800">
+  <p><em>Documento de privacidad y seguridad de datos médicos</em></p>
+</div>
 
 ---
 
