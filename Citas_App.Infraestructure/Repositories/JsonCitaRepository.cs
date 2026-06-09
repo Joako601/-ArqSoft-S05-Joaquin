@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 using Citas_App.Models;
 using CitasApp.Interfaces;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CitasApp.Repositories
 {
