@@ -1,0 +1,110 @@
+﻿@model Citas_App.Domain.Models.AgendarViewModel
+
+<link rel="stylesheet" href="~/css/agenda.css" />
+
+<div style="background-color: var(--doc-gray); padding: 40px 20px; min-height: 100vh;">
+
+    <div style="max-width: 1200px; margin: 0 auto;">
+        <h1 class="animate-up" style="color: var(--doc-dark); font-weight: 700; margin-bottom: 30px;">
+            Mi Agenda
+        </h1>
+
+        <div class="doc-card animate-up" style="margin-bottom: 30px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2 style="margin: 0; font-size: 20px; color: var(--doc-dark);">Citas Recientes</h2>
+                <a asp-controller="Cita" asp-action="Crear" class="doc-btn">
+                    + Nueva Cita
+                </a>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table class="doc-table">
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Paciente</th>
+                        <th>Médico</th>
+                        <th>Motivo</th>
+                        <th>Estado</th>
+                    </tr>
+                    @foreach (var c in Model.Citas)
+                    {
+                        var paciente = Model.Pacientes.FirstOrDefault(p => p.Id == c.PacienteId);
+                        var medico = Model.Medicos.FirstOrDefault(m => m.Id == c.MedicoId);
+                        <tr>
+                            <td><strong>@c.Fecha.ToString("dd MMM yyyy")</strong></td>
+                            <td>@c.Hora.ToString("HH:mm")</td>
+                            <td>@(paciente != null ? $"{paciente.Nombre} {paciente.Apellido}" : "—")</td>
+                            <td>@(medico != null ? $"Dr. {medico.Nombre} {medico.Apellido}" : "—")</td>
+                            <td style="color: #666;">@c.Motivo</td>
+                            <td>
+                                @if (c.Estado == "Completada")
+                                {
+                                    <span class="status-badge" style="background: #e6f6f4; color: #00b39b;">@c.Estado</span>
+                                }
+                                else if (c.Estado == "Cancelada")
+                                {
+                                    <span class="status-badge" style="background: #feeef0; color: #e83e8c;">@c.Estado</span>
+                                }
+                                else
+                                {
+                                    <span class="status-badge" style="background: #eef2ff; color: #4361ee;">@c.Estado</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 25px;">
+
+            <div class="doc-card animate-up delay-1">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="margin: 0; font-size: 18px; color: var(--doc-dark);">Pacientes</h3>
+                    <a asp-controller="Paciente" asp-action="Crear" class="doc-btn doc-btn-outline">
+                        + Añadir
+                    </a>
+                </div>
+                <table class="doc-table">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Acción</th>
+                    </tr>
+                    @foreach (var p in Model.Pacientes.Take(5))
+                    {
+                        <tr>
+                            <td><strong>@p.Nombre @p.Apellido</strong></td>
+                            <td style="text-align: right;">
+                                <a asp-controller="Paciente" asp-action="Detalle" asp-route-id="@p.Id" style="color: var(--doc-teal); text-decoration: none; font-weight: 600;">Ver Perfil</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+            <div class="doc-card animate-up delay-2">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="margin: 0; font-size: 18px; color: var(--doc-dark);">Especialistas</h3>
+                    <a asp-controller="Medico" asp-action="Crear" class="doc-btn doc-btn-outline">
+                        + Añadir
+                    </a>
+                </div>
+                <table class="doc-table">
+                    <tr>
+                        <th>Profesional</th>
+                        <th>Especialidad</th>
+                    </tr>
+                    @foreach (var m in Model.Medicos.Take(5))
+                    {
+                        <tr>
+                            <td><strong>Dr. @m.Nombre @m.Apellido</strong></td>
+                            <td style="color: #666;">@m.Especialidad</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,7 +1,7 @@
-﻿using Citas_App.Models;
+﻿using Citas_App.Domain.Models;
 
 
-namespace CitasApp.Interfaces
+namespace Citas_App.Domain.Interfaces
 {
 	public interface IMedicoRepository
 	{

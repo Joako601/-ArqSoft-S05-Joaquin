@@ -1,0 +1,58 @@
+﻿@model List<Citas_App.Domain.Models.Medico>
+
+<link rel="stylesheet" href="~/css/agenda.css" />
+
+<div style="background-color: var(--doc-gray); padding: 40px 20px; min-height: 100vh;">
+
+    <div style="max-width: 900px; margin: 0 auto;">
+
+
+        <div class="animate-up" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <div>
+                <h1 style="color: var(--doc-dark); font-weight: 700; margin: 0; font-size: 28px;">Médicos</h1>
+                <p style="color: #707b8e; margin: 5px 0 0 0; font-size: 15px;">Especialistas y personal de salud</p>
+            </div>
+            
+        </div>
+
+        <div class="profile-list animate-up delay-1">
+
+            @if (Model.Count == 0)
+            {
+                <div style="text-align: center; padding: 50px; color: #707b8e;">
+                    <p>Aún no tienes médicos registrados en el sistema.</p>
+                </div>
+            }
+            else
+            {
+                foreach (var m in Model)
+                {
+                    <div class="profile-card">
+
+                   
+                        <div class="profile-avatar" style="background-color: #f1f5f9; color: #475569;">
+                            @m.Nombre?.FirstOrDefault()@m.Apellido?.FirstOrDefault()
+                        </div>
+
+              
+                        <div class="profile-info">
+                            <h2 class="profile-name">Dr. @m.Nombre @m.Apellido</h2>
+                            <div class="profile-contact">
+                                <span style="color: var(--doc-teal); font-weight: 600;">🩺 @m.Especialidad</span>
+                                <span>🆔 Licencia / ID: @m.Id</span>
+                            </div>
+                        </div>
+
+              
+                        <div class="profile-actions">
+                            <a asp-controller="Medico" asp-action="Detalle" asp-route-id="@m.Id" class="doc-btn doc-btn-outline" style="padding: 8px 16px;">
+                                Ver perfil
+                            </a>
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+</div>

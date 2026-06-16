@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 
 
-namespace Citas_App.Models;
+namespace Citas_App.Domain.Models;
 
 public class AgendarViewModel 
 {

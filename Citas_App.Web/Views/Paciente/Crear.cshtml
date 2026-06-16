@@ -1,0 +1,27 @@
+﻿@model Citas_App.Domain.Models.Paciente
+
+<h1>Agregar Nuevo Paciente</h1>
+
+<form asp-action="Crear" method="post" style="max-width: 400px; margin-top: 20px;">
+    <div style="margin-bottom: 10px;">
+        <label>Nombre:</label>
+        <input asp-for="Nombre" class="form-control" required />
+    </div>
+    <div style="margin-bottom: 10px;">
+        <label>Apellido:</label>
+        <input asp-for="Apellido" class="form-control" required />
+    </div>
+    <div style="margin-bottom: 10px;">
+        <label>Email:</label>
+        <input asp-for="Email" type="email" class="form-control" required />
+    </div>
+    <div style="margin-bottom: 10px;">
+        <label>Teléfono:</label>
+        <input asp-for="Telefono" class="form-control" required />
+    </div>
+
+    <button type="submit" style="padding: 10px 20px; background-color: #198754; color: white; border: none; border-radius: 5px; cursor: pointer;">
+        Guardar Paciente
+    </button>
+    <a asp-action="Index" style="margin-left: 10px; text-decoration: none;">Cancelar</a>
+</form>

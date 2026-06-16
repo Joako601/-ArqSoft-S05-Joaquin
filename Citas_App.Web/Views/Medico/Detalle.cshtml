@@ -1,0 +1,70 @@
+﻿@model Citas_App.Domain.Models.Medico
+
+
+<link rel="stylesheet" href="~/css/agenda.css" />
+
+<div style="background-color: var(--doc-gray); padding: 40px 20px; min-height: 100vh;">
+
+    <div style="max-width: 1000px; margin: 0 auto;">
+
+
+        <div class="animate-up" style="display: flex; justify-content: space-between; align-items: center;">
+            <a asp-controller="Medico" asp-action="Index" class="doc-btn doc-btn-outline" style="padding: 8px 18px; font-size: 14px; border-radius: 8px;">
+                ← Volver al directorio
+            </a>
+            <span style="color: #707b8e; font-size: 14px; font-weight: 500;">Perfil Profesional</span>
+        </div>
+
+       
+        <div class="detail-layout">
+
+            
+            <div class="sidebar-profile animate-up delay-1">
+                
+                <div class="avatar-large" style="background-color: #f1f5f9; color: #475569; box-shadow: 0 6px 16px rgba(71, 85, 105, 0.15);">
+                    @Model.Nombre?.FirstOrDefault()@Model.Apellido?.FirstOrDefault()
+                </div>
+                <h2 style="margin: 0; font-size: 22px; color: var(--doc-dark); font-weight: 700;">
+                    Dr. @Model.Nombre @Model.Apellido
+                </h2>
+                <span class="patient-badge" style="background-color: #e6f6f4; color: var(--doc-teal);">@Model.Especialidad</span>
+            </div>
+
+       
+            <div class="main-medical-info animate-up delay-2">
+
+              
+                <div class="info-block">
+                    <h3 class="block-title">📋 Credenciales Médicas</h3>
+
+                    <div class="data-grid">
+                        <div class="data-item">
+                            <span class="data-label">Nombre del Especialista</span>
+                            <span class="data-value">Dr. @Model.Nombre @Model.Apellido</span>
+                        </div>
+
+                        <div class="data-item">
+                            <span class="data-label">Especialidad Principal</span>
+                            <span class="data-value">🩺 @Model.Especialidad</span>
+                        </div>
+
+                        <div class="data-item">
+                            <span class="data-label">ID de Registro Interno</span>
+                            <span class="data-value" style="color: #707b8e;">#@Model.Id</span>
+                        </div>
+                    </div>
+                </div>
+
+         
+                <div class="info-block">
+                    <h3 class="block-title">🏥 Acerca del Profesional</h3>
+                    <p style="color: #64748b; margin: 0; font-size: 15px; line-height: 1.6;">
+                        El Dr. @Model.Nombre @Model.Apellido se encuentra actualmente activo y disponible en el sistema para agendar citas. Puede ser asignado a consultas regulares dentro de su área de especialidad (@Model.Especialidad).
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

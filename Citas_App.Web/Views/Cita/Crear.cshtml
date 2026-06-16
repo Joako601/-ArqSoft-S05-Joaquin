@@ -1,0 +1,71 @@
+﻿@model Citas_App.Domain.Models.Cita
+@using Citas_App.Domain.Models
+
+@{
+    // Rescatamos las listas que enviaste desde el Controlador
+    var pacientes = ViewBag.Pacientes as List<Paciente>;
+    var medicos = ViewBag.Medicos as List<Medico>;
+}
+
+<h1>Agendar Nueva Cita</h1>
+
+<form asp-action="Crear" method="post" style="max-width: 400px; margin-top: 20px;">
+
+    <div style="margin-bottom: 10px;">
+        <label>Paciente:</label>
+        <select asp-for="PacienteId" class="form-control" required>
+            <option value="">-- Selecciona un Paciente --</option>
+            @if (pacientes != null)
+            {
+                foreach (var p in pacientes)
+                {
+                    <option value="@p.Id">@p.Nombre @p.Apellido</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <label>Médico:</label>
+        <select asp-for="MedicoId" class="form-control" required>
+            <option value="">-- Selecciona un Médico --</option>
+            @if (medicos != null)
+            {
+                foreach (var m in medicos)
+                {
+                    // Mostramos el nombre y la especialidad para que sea más fácil elegir
+                    <option value="@m.Id">@m.Nombre @m.Apellido - @m.Especialidad</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <label>Fecha:</label>
+        <input asp-for="Fecha" type="date" class="form-control" required />
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <label>Hora:</label>
+        <input asp-for="Hora" type="time" class="form-control" required />
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <label>Motivo:</label>
+        <input asp-for="Motivo" class="form-control" required placeholder="Ej. Chequeo general, Dolor de cabeza..." />
+    </div>
+
+    <div style="margin-bottom: 10px;">
+        <label>Estado:</label>
+        <select asp-for="Estado" class="form-control" required>
+            <option value="Programada">Programada</option>
+            <option value="Completada">Completada</option>
+            <option value="Cancelada">Cancelada</option>
+        </select>
+    </div>
+
+    <button type="submit" style="padding: 10px 20px; background-color: #198754; color: white; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px;">
+        Guardar Cita
+    </button>
+    <a asp-action="Index" style="margin-left: 10px; text-decoration: none;">Cancelar</a>
+</form>

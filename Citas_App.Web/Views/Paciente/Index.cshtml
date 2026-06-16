@@ -1,0 +1,59 @@
+﻿@model List<Citas_App.Domain.Models.Paciente>
+
+<link rel="stylesheet" href="~/css/agenda.css" />
+
+<div style="background-color: var(--doc-gray); padding: 40px 20px; min-height: 100vh;">
+
+    <div style="max-width: 900px; margin: 0 auto;">
+
+       
+        <div class="animate-up" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <div>
+                <h1 style="color: var(--doc-dark); font-weight: 700; margin: 0; font-size: 28px;">Pacientes</h1>
+               
+            </div>
+            
+        </div>
+
+        
+        <div class="profile-list animate-up delay-1">
+
+            @if (Model.Count == 0)
+            {
+                <div style="text-align: center; padding: 50px; color: #707b8e;">
+                    <p>Aún no tienes pacientes registrados.</p>
+                </div>
+            }
+            else
+            {
+                foreach (var p in Model)
+                {
+                    <div class="profile-card">
+
+                        
+                        <div class="profile-avatar">
+                            @p.Nombre?.FirstOrDefault()@p.Apellido?.FirstOrDefault()
+                        </div>
+
+                        
+                        <div class="profile-info">
+                            <h2 class="profile-name">@p.Nombre @p.Apellido</h2>
+                            <div class="profile-contact">
+                                <span>📱 @p.Telefono</span>
+                                <span>✉️ @p.Email</span>
+                            </div>
+                        </div>
+
+                        
+                        <div class="profile-actions">
+                            <a asp-controller="Paciente" asp-action="Detalle" asp-route-id="@p.Id" class="doc-btn doc-btn-outline" style="padding: 8px 16px;">
+                                Ver perfil
+                            </a>
+                        </div>
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+</div>
