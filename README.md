@@ -111,27 +111,27 @@ Citas_App/
 ## 📸 Capturas de Pantalla
 
 <div align="center">
-  <img src="Citas_App/Img/Home.png" alt="Panel de Inicio" width="800">
+  <img src="Citas_App.Web/Img/Home.png" alt="Panel de Inicio" width="800">
   <p><em>Panel de control principal (Home)</em></p>
 </div>
 
 <div align="center">
-  <img src="Citas_App/Img/Agendar.png" alt="Vista del Panel Central" width="800">
+  <img src="Citas_App.Web/Img/Agendar.png" alt="Vista del Panel Central" width="800">
   <p><em>Vista unificada del sistema (Agendar)</em></p>
 </div>
 
 <div align="center">
-  <img src="Citas_App/Img/Citas.png" alt="Vista de Agenda" width="800">
+  <img src="Citas_App.Web/Img/Citas.png" alt="Vista de Agenda" width="800">
   <p><em>Gestor centralizado de citas y horarios</em></p>
 </div>
 
 <div align="center">
-  <img src="Citas_App/Img/Pacientes.png" alt="Directorio de Pacientes" width="800">
+  <img src="Citas_App.Web/Img/Pacientes.png" alt="Directorio de Pacientes" width="800">
   <p><em>Directorio humanizado y fichas clínicas</em></p>
 </div>
 
 <div align="center">
-  <img src="Citas_App/Img/Privacidad.png" alt="Políticas de Privacidad" width="800">
+  <img src="Citas_App.Web/Img/Privacidad.png" alt="Políticas de Privacidad" width="800">
   <p><em>Documento de privacidad y seguridad de datos médicos</em></p>
 </div>
 
