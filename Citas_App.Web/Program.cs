@@ -1,5 +1,6 @@
 using Citas_App.Domain.Interfaces;
 using Citas_App.Infrastructure.Repositories;
+using CitasApp.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,14 @@ builder.Services.AddScoped<ICitaRepository>(s => new CsvCitaRepository(csvCitas)
 builder.Services.AddScoped<IPacienteRepository>(s => new CsvPacienteRepository(csvPacientes));
 builder.Services.AddScoped<IMedicoRepository>(s => new CsvMedicoRepository(csvMedicos));
 */
+
+builder.Services.AddScoped<IPacienteRepository>(sp =>
+{
+	var env = sp.GetRequiredService<IWebHostEnvironment>();
+	var repo = RepositoryFactory.CrearPacienteRepository(
+		builder.Environment.EnvironmentName, env);
+	return new LoggingPacienteRepository(repo);
+});
 
 builder.Services.AddScoped<IPacienteRepository, JsonPacienteRepository>();
 builder.Services.AddScoped<IMedicoRepository, JsonMedicoRepository>();

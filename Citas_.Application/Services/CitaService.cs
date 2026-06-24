@@ -14,6 +14,11 @@ namespace Citas_.Application.Services
 		{
 			_repo = repo;
 		}
+
+		private readonly List<ICitaObserver> _observers = new();
+
+		public void AgregarObserver(ICitaObserver observer)
+			=> _observers.Add(observer);
 		public List<Cita> ObtenerTodos()
 		{
 			return _repo.ObtenerTodos();
@@ -27,6 +32,21 @@ namespace Citas_.Application.Services
 		public void Agregar(Cita cita)
 		{
 			_repo.Agregar(cita);
+		}
+
+		public Cita? ObtenerPorId(int id)
+		{
+			return _repo.ObtenerTodos().FirstOrDefault(c => c.Id == id);
+		}
+
+		public Cita? ConfirmarCita(int citaId)
+		{
+			var cita = ObtenerPorId(citaId);
+			if (cita == null) return null;
+			cita.Estado = "Confirmada";
+			foreach (var observer in _observers)
+				observer.OnCitaConfirmada(cita);
+			return cita;
 		}
 
 	}

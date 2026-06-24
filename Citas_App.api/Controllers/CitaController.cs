@@ -35,5 +35,13 @@ namespace CitasApp.Api.Controllers
 		{
 			return Ok("¡El controlador y las rutas funcionan a la perfección!");
 		}
+
+		[HttpPost("confirmar/{citaId}")]
+		public IActionResult Confirmar(int citaId)
+		{
+			var cita = _citaService.ConfirmarCita(citaId);
+			if (cita == null) return NotFound();
+			return Ok(cita);
+		}
 	}
 }
