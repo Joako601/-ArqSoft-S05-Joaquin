@@ -43,5 +43,13 @@ namespace CitasApp.Api.Controllers
 			if (cita == null) return NotFound();
 			return Ok(cita);
 		}
+
+		[HttpGet("{id}")]
+		public IActionResult GetById(int id)
+		{
+			var cita = _citaService.ObtenerPorId(id);
+			if (cita == null) return NotFound();
+			return Ok(cita);
+		}
 	}
 }
