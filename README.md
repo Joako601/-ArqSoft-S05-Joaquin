@@ -95,7 +95,7 @@ Citas_App/
 
 Los diagramas de arquitectura del sistema están en:
 
-[`docs/c4-arquitectura.md`](c4-arquitectura.md)
+[`docs/c4-arquitectura.md`](docs/c4-arquitectura.md)
 
 
 ## Navegación
