@@ -34,39 +34,52 @@ Archivos JSON en `data/` — sin base de datos.
 La solución está dividida en tres proyectos independientes:
 ```
 Citas_App/
-├── Citas_App.Domain/          # Contratos e entidades del negocio
+├── Citas_App.Domain/              # Contratos e entidades del negocio
 │   ├── Interfaces/
 │   │   ├── ICitaRepository.cs
 │   │   ├── IMedicoRepository.cs
-│   │   └── IPacienteRepository.cs
+│   │   ├── IPacienteRepository.cs
+│   │   └── ICitaObserver.cs       # Contrato del patrón Observer
 │   └── Models/
 │       ├── Cita.cs
-│       ├── CitaJson.cs        # DTO de serialización JSON
+│       ├── CitaJson.cs            # DTO de serialización JSON
 │       ├── Medico.cs
 │       ├── Paciente.cs
 │       └── AgendarViewModel.cs
 │
-├── Citas_App.Application/     # Casos de uso y lógica de aplicación
+├── Citas_.Application/            # Casos de uso y lógica de aplicación
 │   └── Services/
-│       ├── CitaService.cs
+│       ├── CitaService.cs         # Subject del patrón Observer
 │       ├── MedicoService.cs
 │       └── PacienteService.cs
 │
-├── Citas_App.api/             # Capa de presentación API RESTful
+├── Citas_App.api/                 # Capa de presentación API RESTful
 │   ├── Controllers/
 │   │   ├── CalculadoraController.cs # Endpoint utilitario matemático
 │   │   ├── CitaController.cs
 │   │   ├── MedicoController.cs
 │   │   └── PacienteController.cs
-│   └── data/                  
+│   └── data/
 │
-├── Citas_App.Infraestructure/ # Implementaciones de repositorios JSON
-│   └── Repositories/
-│       ├── JsonCitaRepository.cs
-│       ├── JsonMedicoRepository.cs
-│       └── JsonPacienteRepository.cs
+├── Citas_App.Infrastructure/      # Implementaciones de repositorios JSON
+│   ├── Repositories/
+│   │   ├── JsonCitaRepository.cs
+│   │   ├── JsonMedicoRepository.cs
+│   │   ├── JsonPacienteRepository.cs
+│   │   ├── CsvCitaRepository.cs
+│   │   ├── CsvMedicoRepository.cs
+│   │   ├── CsvPacienteRepository.cs
+│   │   ├── SqliteCitaRepository.cs
+│   │   ├── SqliteMedicoRepository.cs
+│   │   ├── SqlitePacienteRepository.cs
+│   │   ├── MemoriaPacienteRepository.cs
+│   │   ├── LoggingPacienteRepository.cs # Decorator sobre IPacienteRepository
+│   │   └── RepositoryFactory.cs   # Factory de repositorios
+│   └── Observers/
+│       ├── EmailObserver.cs       # Observer concreto
+│       └── SmsObserver.cs         # Observer concreto
 │
-└── Citas_App/                 # Capa de presentación (MVC Web)
+└── Citas_App.Web/                 # Capa de presentación (MVC Web)
     ├── Controllers/
     │   ├── AgendarController.cs
     │   ├── CitaController.cs
@@ -77,6 +90,13 @@ Citas_App/
     ├── data/
     └── Program.cs
 ```
+
+## Diagramas C4
+
+Los diagramas de arquitectura del sistema están en:
+
+[`docs/c4-arquitectura.md`](c4-arquitectura.md)
+
 
 ## Navegación
 - `/Pacientes` — lista de pacientes
@@ -108,30 +128,41 @@ Citas_App/
 - **Bootstrap 5:** Utilizado para la estructura del layout base y la barra de navegación responsiva.
 
 ---
+
+## Patrones GoF
+
++ Factory — RepositoryFactory (Citas_App.Infrastructure/Repositories/RepositoryFactory.cs) <br>
+Centraliza la creación de los repositorios concretos según el entorno de ejecución (Production vs. desarrollo), devolviendo siempre la abstracción (IPacienteRepository, IMedicoRepository, ICitaRepository). Esto evita instanciar repositorios concretos con new desde Program.cs y permite cambiar la implementación de persistencia (JSON, SQLite, memoria, CSV) sin tocar el resto de la aplicación.
++ Decorator — LoggingPacienteRepository (Citas_App.Infrastructure/Repositories/LoggingPacienteRepository.cs) <br>
+Envuelve cualquier IPacienteRepository (normalmente el que devuelve la Factory) y le añade un comportamiento de logging (timestamps, conteo de registros, resultado de la operación) sin modificar la implementación original ni el contrato. Se compone así: new LoggingPacienteRepository(RepositoryFactory.CrearPacienteRepository(...)), demostrando cómo Factory y Decorator se combinan en el mismo registro de dependencias (Program.cs). 
++ Observer — ICitaObserver (Citas_App.Domain/Interfaces/ICitaObserver.cs) + EmailObserver / SmsObserver (Citas_App.Infrastructure/Observers/) <br>
+CitaService actúa como Subject: mantiene una lista de observadores (AgregarObserver) y, cuando una cita cambia a estado "Confirmada" (ConfirmarCita), notifica a todos los observadores registrados llamando a OnCitaConfirmada(cita). EmailObserver y SmsObserver son observadores concretos que reaccionan a esa notificación simulando el envío de una confirmación. Esto desacopla la lógica de negocio de las notificaciones: se pueden agregar nuevos canales (push, webhook, etc.) implementando ICitaObserver sin modificar CitaService.
+
+---
 ## 📸 Capturas de Pantalla
 
 <div align="center">
-  <img src="Citas_App/Img/Home.png" alt="Panel de Inicio" width="800">
+  <img src="Citas_App.Web/Img/Home.png" alt="Panel de Inicio" width="800">
   <p><em>Panel de control principal (Home)</em></p>
 </div>
 
 <div align="center">
-  <img src="Citas_App/Img/Agendar.png" alt="Vista del Panel Central" width="800">
+  <img src="Citas_App.Web/Img/Agendar.png" alt="Vista del Panel Central" width="800">
   <p><em>Vista unificada del sistema (Agendar)</em></p>
 </div>
 
 <div align="center">
-  <img src="Citas_App/Img/Citas.png" alt="Vista de Agenda" width="800">
+  <img src="Citas_App.Web/Img/Citas.png" alt="Vista de Agenda" width="800">
   <p><em>Gestor centralizado de citas y horarios</em></p>
 </div>
 
 <div align="center">
-  <img src="Citas_App/Img/Pacientes.png" alt="Directorio de Pacientes" width="800">
+  <img src="Citas_App.Web/Img/Pacientes.png" alt="Directorio de Pacientes" width="800">
   <p><em>Directorio humanizado y fichas clínicas</em></p>
 </div>
 
 <div align="center">
-  <img src="Citas_App/Img/Privacidad.png" alt="Políticas de Privacidad" width="800">
+  <img src="Citas_App.Web/Img/Privacidad.png" alt="Políticas de Privacidad" width="800">
   <p><em>Documento de privacidad y seguridad de datos médicos</em></p>
 </div>
 
