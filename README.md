@@ -95,9 +95,8 @@ Citas_App/
 
 Los diagramas de arquitectura del sistema están en:
 
-👉 [`docs/c4-arquitectura.md`](docs/c4-arquitectura.md)
+[`docs/c4-arquitectura.md`](c4-arquitectura.md)
 
-Ahí se documentan el contexto del sistema, sus contenedores (Web, API, persistencia) y los componentes internos donde se aplican los patrones **Factory**, **Decorator** y **Observer**.
 
 ## Navegación
 - `/Pacientes` — lista de pacientes
