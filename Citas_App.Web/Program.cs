@@ -1,37 +1,33 @@
 using Citas_App.Domain.Interfaces;
+using Citas_App.Infrastructure.db;
 using Citas_App.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using CitasApp.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
-
-// Configuración de rutas de datos
+// Configuración de rutas de datos (se mantiene por si otros repos JSON siguen en uso)
 var dataFolder = Path.Combine(builder.Environment.ContentRootPath, "data");
 if (!Directory.Exists(dataFolder)) Directory.CreateDirectory(dataFolder);
 
-var csvPacientes = Path.Combine(dataFolder, "pacientes.csv");
-var csvMedicos = Path.Combine(dataFolder, "medicos.csv");
-var csvCitas = Path.Combine(dataFolder, "citas.csv");
+// PostgreSQL
+builder.Services.AddDbContext<CitasDbContext>(options =>
+	options.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
 
-// Registro de servicios (Inyección de Dependencias)
 builder.Services.AddScoped<IPacienteRepository>(sp =>
 {
-	var env = sp.GetRequiredService<IWebHostEnvironment>();
-	var repo = RepositoryFactory.CrearPacienteRepository(
-		builder.Environment.EnvironmentName, env);
+	var context = sp.GetRequiredService<CitasDbContext>();
+	var repo = new PostgresPacienteRepository(context);
 	return new LoggingPacienteRepository(repo);
 });
 
-builder.Services.AddScoped<IMedicoRepository, JsonMedicoRepository>();
-builder.Services.AddScoped<ICitaRepository, JsonCitaRepository>();
-
+builder.Services.AddScoped<IMedicoRepository, PostgresMedicoRepository>();
+builder.Services.AddScoped<ICitaRepository, PostgresCitaRepository>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
 	app.UseExceptionHandler("/Home/Error");

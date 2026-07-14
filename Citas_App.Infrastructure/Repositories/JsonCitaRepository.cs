@@ -17,9 +17,29 @@ namespace Citas_App.Infrastructure.Repositories
 
 		public List<Cita> ObtenerTodos()
 		{
+			return LeerCitas();
+		}
+
+		public List<Cita> ObtenerPorPaciente(int pacienteId) =>
+			ObtenerTodos().Where(c => c.PacienteId == pacienteId).ToList();
+
+		public void Agregar(Cita cita)
+		{
+			var citas = LeerCitas();
+
+			cita.Id = citas.Any() ? citas.Max(c => c.Id) + 1 : 1;
+			citas.Add(cita);
+
+			GuardarCitas(citas);
+		}
+
+		private List<Cita> LeerCitas()
+		{
 			if (!File.Exists(_path)) return new();
+
 			var json = File.ReadAllText(_path);
 			var citasJson = JsonSerializer.Deserialize<List<CitaJson>>(json, _options) ?? new();
+
 			return citasJson.Select(c => new Cita
 			{
 				Id = c.Id,
@@ -32,31 +52,10 @@ namespace Citas_App.Infrastructure.Repositories
 			}).ToList();
 		}
 
-		public List<Cita> ObtenerPorPaciente(int pacienteId) =>
-			ObtenerTodos().Where(c => c.PacienteId == pacienteId).ToList();
-
-		public void Agregar(Cita cita)
+		private void GuardarCitas(List<Cita> citas)
 		{
-
-			string rutaArchivo = Path.Combine("data", "citas.json");
-
-
-			var jsonActual = File.ReadAllText(rutaArchivo);
-			var citas = JsonSerializer.Deserialize<List<Cita>>(jsonActual) ?? new List<Cita>();
-
-
-			int nuevoId = citas.Any() ? citas.Max(p => p.Id) + 1 : 1;
-			cita.Id = nuevoId;
-
-
-			citas.Add(cita);
-
-
-			var opciones = new JsonSerializerOptions { WriteIndented = true };
-			var nuevoJson = JsonSerializer.Serialize(citas, opciones);
-
-
-			File.WriteAllText(rutaArchivo, nuevoJson);
+			var json = JsonSerializer.Serialize(citas, _options);
+			File.WriteAllText(_path, json);
 		}
 	}
-}
+}	
