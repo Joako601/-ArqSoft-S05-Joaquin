@@ -1,4 +1,8 @@
 <Solution>
+  <Folder Name="/.github/" />
+  <Folder Name="/.github/workflows/">
+    <File Path="ci.yml" />
+  </Folder>
   <Project Path="Citas_.Application/Citas_.Application.csproj" Id="6c8bfe2b-3f60-4f92-ad5c-3ae244b98c31" />
   <Project Path="Citas_App.api/Citas_App.api.csproj" Id="89059994-a2ca-4a95-b3a2-5dec012842b5" />
   <Project Path="Citas_App.Domain/Citas_App.Domain.csproj" Id="90b66adb-38fd-46bf-b871-e27344a11903" />
