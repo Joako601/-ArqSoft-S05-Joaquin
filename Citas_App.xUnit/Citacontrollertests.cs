@@ -6,7 +6,6 @@ using Xunit;
 
 namespace Citas_App.xUnit.Controllers
 {
-	
 	public class CitaRepositoryFake : ICitaRepository
 	{
 		private readonly List<Cita> _citas;
@@ -91,9 +90,9 @@ namespace Citas_App.xUnit.Controllers
 			var resultado = controller.Index() as ViewResult;
 			var modelo = resultado?.Model as List<Cita>;
 
-
+			// Assert
 			Assert.NotNull(modelo);
-			Assert.Equal(99, modelo.Count);
+			Assert.Equal(citasEsperadas.Count, modelo.Count);
 			Assert.Equal(citasEsperadas, modelo);
 		}
 
