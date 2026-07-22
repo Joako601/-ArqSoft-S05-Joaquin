@@ -15,6 +15,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Citas_.Application\Citas_.Application.csproj" />
+    <ProjectReference Include="..\Citas_App.api\Citas_App.api.csproj" />
+    <ProjectReference Include="..\Citas_App.Domain\Citas_App.Domain.csproj" />
+    <ProjectReference Include="..\Citas_App.Infrastructure\Citas_App.Infrastructure.csproj" />
+    <ProjectReference Include="..\Citas_App.Web\Citas_App.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
 
